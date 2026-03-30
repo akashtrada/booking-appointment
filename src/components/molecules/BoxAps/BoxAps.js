@@ -3,8 +3,8 @@ import { Box, Avatar, Typography, Skeleton } from '@mui/material';
 import { px } from '../../../utils/appPlus';
 
 const GENDER_COLOR = {
-  male: '#EC4899',
-  female: '#3B82F6',
+  male: '#3B82F6',
+  female: '#EC4899',
 };
 
 export default function BoxAps(props) {
