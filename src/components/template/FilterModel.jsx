@@ -48,7 +48,7 @@ export default function FilterModel({anchorEl, onClose})
     {
       setSelectedTherapistIds(therapists.map((t) => t.id));
     }
-  }, [open]);
+  }, [open, selectedTherapistIds.length, setSelectedTherapistIds, therapists]);
 
   const filteredTherapistList = useMemo(() =>
   {

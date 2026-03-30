@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {
   Box,
   Button,
@@ -154,7 +154,7 @@ export default function CreateBookingDrawer()
   const {fields, append, remove} = useFieldArray({control, name: "items"});
   const watchStartTime = watch("start_time");
 
-  const buildEditDefaults = (booking) =>
+  const buildEditDefaults = useCallback((booking) =>
   {
     const items = Object.values(booking.booking_item || {}).flat();
     const firstItem = items[0];
@@ -182,7 +182,7 @@ export default function CreateBookingDrawer()
       source: booking.source || "",
       note: booking.note || booking.notes || ""
     };
-  };
+  }, [therapists]);
 
   useEffect(() =>
   {
@@ -202,7 +202,7 @@ export default function CreateBookingDrawer()
       setFormDate(selectedDate);
       setIsEditing(false);
     }
-  }, [isOpen, panelMode, selectedBookingId]);
+  }, [isOpen, panelMode, selectedBookingId, buildEditDefaults, isEdit, rawBooking, reset, selectedDate]);
 
   const handleStartTimeChange = (time, rhfOnChange) =>
   {

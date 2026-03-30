@@ -56,7 +56,7 @@ export default function BookingItemForm({index, control, setValue, getValues, re
         setValue(`items.${index}.room`, fullRoom);
       }
     }
-  }, [rooms]);
+  }, [rooms, index, setValue, watchedRoom?.items?.length, watchedRoom?.room_id]);
 
   const styles = useMemo(() => ({
     card: {
