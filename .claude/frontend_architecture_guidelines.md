@@ -9,13 +9,17 @@
 ✅ Correct:
 
 ```jsx
-export default function Button(props) {}
+export default function Button(props)
+{
+}
 ```
 
 ❌ Avoid:
 
 ```jsx
-const Button = () => {}
+const Button = () =>
+{
+}
 ```
 
 ---
@@ -28,15 +32,16 @@ const Button = () => {}
 ✅ Correct:
 
 ```jsx
-export default function Button(props) {
-  const { label, onClick } = props;
+export default function Button(props)
+{
+  const {label, onClick} = props;
 }
 ```
 
 ❌ Avoid:
 
 ```jsx
-function Button({ label, onClick })
+function Button({label, onClick})
 ```
 
 ---
@@ -60,7 +65,7 @@ const {
 - File name = component name
 
 ```
-Button.js
+Button.jsx
 Card.js
 UserProfile.js
 ```
@@ -89,10 +94,11 @@ useAuth.js
 ## Standard Component Example
 
 ```jsx
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
-export default function Button(props) {
-  const { label, onClick, disabled = false } = props;
+export default function Button(props)
+{
+  const {label, onClick, disabled = false} = props;
 
   const styles = useMemo(() => ({
     button: {

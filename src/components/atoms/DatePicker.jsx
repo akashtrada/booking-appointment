@@ -5,8 +5,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {DatePicker as MuiDatePicker} from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import {STR_TODAY} from "../../../constants/constantsPlus";
-import {defaultBgClr} from "../../../theme/theme";
+import {STR_TODAY} from "../../constants/constantsPlus";
+import {defaultBgClr} from "../../theme/theme";
 
 export default function DatePicker(props)
 {

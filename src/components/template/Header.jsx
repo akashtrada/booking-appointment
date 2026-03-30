@@ -1,8 +1,8 @@
 import {useMemo} from "react";
 import {AppBar, Box, Toolbar, Typography} from "@mui/material";
 import {NavLink} from "react-router-dom";
-import {HEADER_BG, NAV_ACTIVE} from "../../../theme/theme";
-import {STR_LOGO} from "../../../constants/constantsPlus";
+import {HEADER_BG, NAV_ACTIVE} from "../../theme/theme";
+import {STR_LOGO} from "../../constants/constantsPlus";
 
 const NAV_TABS = [
   {label: "Home", to: "/", disabled: false},
@@ -10,7 +10,7 @@ const NAV_TABS = [
   {label: "Sales", to: "/sales", disabled: true},
   {label: "Clients", to: "/clients", disabled: true},
   {label: "Transactions", to: "/transactions", disabled: true},
-  {label: "Reports", to: "/reports", disabled: true},
+  {label: "Reports", to: "/reports", disabled: true}
 ];
 
 export default function Header()
@@ -59,13 +59,13 @@ export default function Header()
               <Typography
                 key={tab.to}
                 style={{
-                  color: '#ffffff',
+                  color: "#ffffff",
                   fontWeight: 500,
-                  fontSize: '0.875rem',
-                  padding: '6px 12px',
+                  fontSize: "0.875rem",
+                  padding: "6px 12px",
                   opacity: 0.4,
-                  cursor: 'not-allowed',
-                  userSelect: 'none',
+                  cursor: "not-allowed",
+                  userSelect: "none"
                 }}
               >
                 {tab.label}

@@ -1,38 +1,39 @@
-import { useState, useMemo, useEffect } from 'react';
+import {useEffect, useMemo, useState} from "react";
 import {
-  Popover,
+  Autocomplete,
   Box,
-  Typography,
+  Button,
+  Checkbox,
+  Chip,
   Divider,
+  FormControlLabel,
+  InputAdornment,
+  Popover,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  Checkbox,
   TextField,
-  InputAdornment,
-  Autocomplete,
-  Chip,
-  Button,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import useFilterStore from '../../../store/filterStore';
-import useTherapistStore from '../../../store/therapistStore';
-import useRoomStore from '../../../store/roomStore';
-import { px } from '../../../utils/appPlus';
-import { textPrimaryClr, textSecondaryClr, dividerClr, HEADER_BG } from '../../../theme/theme';
+  Typography
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import useFilterStore from "../../store/filterStore";
+import useTherapistStore from "../../store/therapistStore";
+import useRoomStore from "../../store/roomStore";
+import {px} from "../../utils/utilPlus";
+import {HEADER_BG, textPrimaryClr, textSecondaryClr} from "../../theme/theme";
 
 const BOOKING_STATUSES = [
-  'Confirmed',
-  'Unconfirmed',
-  'Checked In',
-  'Completed',
-  'Cancelled',
-  'No Show',
-  'Holding',
-  'Check-in (In Progress)',
+  "Confirmed",
+  "Unconfirmed",
+  "Checked In",
+  "Completed",
+  "Cancelled",
+  "No Show",
+  "Holding",
+  "Check-in (In Progress)"
 ];
 
-export default function FilterMenu({ anchorEl, onClose }) {
+export default function FilterModel({anchorEl, onClose})
+{
   const open = Boolean(anchorEl);
 
   const genderFilter = useFilterStore((s) => s.genderFilter);
@@ -48,33 +49,41 @@ export default function FilterMenu({ anchorEl, onClose }) {
   const therapists = useTherapistStore((s) => s.therapists);
   const resourceOptions = useRoomStore((s) => s.resourceOptions);
 
-  const [therapistSearch, setTherapistSearch] = useState('');
+  const [therapistSearch, setTherapistSearch] = useState("");
 
   // initialise selectedTherapistIds to all when first opening and none selected
-  useEffect(() => {
-    if (open && selectedTherapistIds.length === 0 && therapists.length > 0) {
+  useEffect(() =>
+  {
+    if(open && selectedTherapistIds.length === 0 && therapists.length > 0)
+    {
       setSelectedTherapistIds(therapists.map((t) => t.id));
     }
   }, [open]);
 
-  const filteredTherapistList = useMemo(() => {
-    if (!therapistSearch.trim()) return therapists;
+  const filteredTherapistList = useMemo(() =>
+  {
+    if(!therapistSearch.trim())
+    {
+      return therapists;
+    }
     const q = therapistSearch.toLowerCase();
     return therapists.filter(
       (t) =>
         t.alias?.toLowerCase().includes(q) ||
         t.code?.toLowerCase().includes(q) ||
-        String(t.pagerNumber || '').includes(q)
+        String(t.pagerNumber || "").includes(q)
     );
   }, [therapists, therapistSearch]);
 
   const allSelected = selectedTherapistIds.length === therapists.length;
 
-  const handleSelectAll = (checked) => {
+  const handleSelectAll = (checked) =>
+  {
     setSelectedTherapistIds(checked ? therapists.map((t) => t.id) : []);
   };
 
-  const handleTherapistToggle = (id) => {
+  const handleTherapistToggle = (id) =>
+  {
     setSelectedTherapistIds(
       selectedTherapistIds.includes(id)
         ? selectedTherapistIds.filter((x) => x !== id)
@@ -82,7 +91,8 @@ export default function FilterMenu({ anchorEl, onClose }) {
     );
   };
 
-  const handleStatusToggle = (status) => {
+  const handleStatusToggle = (status) =>
+  {
     setStatusFilters(
       statusFilters.includes(status)
         ? statusFilters.filter((s) => s !== status)
@@ -90,52 +100,53 @@ export default function FilterMenu({ anchorEl, onClose }) {
     );
   };
 
-  const handleClear = () => {
+  const handleClear = () =>
+  {
     clearFilters();
     setSelectedTherapistIds(therapists.map((t) => t.id));
-    setTherapistSearch('');
+    setTherapistSearch("");
   };
 
   const styles = useMemo(() => ({
-    paper: { width: 320, maxHeight: '80vh', overflowY: 'auto' },
-    section: { padding: `${px(12)} ${px(16)}` },
+    paper: {width: 320, maxHeight: "80vh", overflowY: "auto"},
+    section: {padding: `${px(12)} ${px(16)}`},
     sectionTitle: {
-      fontSize: '12px',
+      fontSize: "12px",
       fontWeight: 700,
       color: textSecondaryClr,
-      textTransform: 'uppercase',
-      letterSpacing: '0.5px',
-      marginBottom: px(8),
+      textTransform: "uppercase",
+      letterSpacing: "0.5px",
+      marginBottom: px(8)
     },
     groupLabel: {
-      fontSize: '13px',
+      fontSize: "13px",
       fontWeight: 600,
       color: textPrimaryClr,
-      marginBottom: px(6),
+      marginBottom: px(6)
     },
-    radioLabel: { fontSize: '13px', color: textPrimaryClr },
+    radioLabel: {fontSize: "13px", color: textPrimaryClr},
     statusGrid: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: `${px(2)} ${px(4)}`,
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: `${px(2)} ${px(4)}`
     },
-    checkLabel: { fontSize: '13px', color: textPrimaryClr },
+    checkLabel: {fontSize: "13px", color: textPrimaryClr},
     therapistRow: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: px(8),
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: px(8)
     },
-    therapistTitle: { fontSize: '14px', fontWeight: 700, color: textPrimaryClr },
+    therapistTitle: {fontSize: "14px", fontWeight: 700, color: textPrimaryClr},
     clearBtn: {
       color: HEADER_BG,
-      fontSize: '13px',
+      fontSize: "13px",
       fontWeight: 600,
-      textTransform: 'none',
+      textTransform: "none",
       padding: `${px(12)} ${px(16)}`,
-      width: '100%',
-      justifyContent: 'flex-start',
-    },
+      width: "100%",
+      justifyContent: "flex-start"
+    }
   }), []);
 
   return (
@@ -143,9 +154,9 @@ export default function FilterMenu({ anchorEl, onClose }) {
       open={open}
       anchorEl={anchorEl}
       onClose={onClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      PaperProps={{ style: styles.paper }}
+      anchorOrigin={{vertical: "bottom", horizontal: "right"}}
+      transformOrigin={{vertical: "top", horizontal: "right"}}
+      PaperProps={{style: styles.paper}}
     >
       {/* Show by group */}
       <Box style={styles.section}>
@@ -189,7 +200,7 @@ export default function FilterMenu({ anchorEl, onClose }) {
                 key={option.value}
                 label={option.label}
                 size="small"
-                {...getTagProps({ index })}
+                {...getTagProps({index})}
               />
             ))
           }
@@ -236,7 +247,7 @@ export default function FilterMenu({ anchorEl, onClose }) {
                 onChange={(e) => handleSelectAll(e.target.checked)}
               />
             }
-            label={<Typography style={{ fontSize: '13px', fontWeight: 600 }}>Select all</Typography>}
+            label={<Typography style={{fontSize: "13px", fontWeight: 600}}>Select all</Typography>}
             labelPlacement="start"
           />
         </Box>
@@ -249,13 +260,13 @@ export default function FilterMenu({ anchorEl, onClose }) {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon style={{ fontSize: '16px', color: textSecondaryClr }} />
+                <SearchIcon style={{fontSize: "16px", color: textSecondaryClr}} />
               </InputAdornment>
-            ),
+            )
           }}
-          style={{ marginBottom: px(8) }}
+          style={{marginBottom: px(8)}}
         />
-        <Box style={{ maxHeight: px(180), overflowY: 'auto' }}>
+        <Box style={{maxHeight: px(180), overflowY: "auto"}}>
           {filteredTherapistList.map((t) => (
             <FormControlLabel
               key={t.id}
@@ -271,7 +282,7 @@ export default function FilterMenu({ anchorEl, onClose }) {
                   {t.alias || t.code || `Therapist ${t.id}`}
                 </Typography>
               }
-              style={{ display: 'flex', marginBottom: px(2) }}
+              style={{display: "flex", marginBottom: px(2)}}
             />
           ))}
         </Box>

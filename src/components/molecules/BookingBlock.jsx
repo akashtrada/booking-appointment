@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {Box} from "@mui/material";
 import {useDraggable} from "@dnd-kit/core";
-import StatusIcon from "../../atoms/StatusIcon/StatusIcon";
-import TextHighlighter from "../../atoms/TextHighlighter/TextHighlighter";
-import {gapHalf, gapQuarter, STATUS_COLORS, textPrimaryClr, textSecondaryClr} from "../../../theme/theme";
-import {ICON_COLORS, SLOT_HEIGHT, STR_CANCELLED, STR_NO_SHOW} from "../../../constants/constantsPlus";
-import {px} from "../../../utils/appPlus";
+import StatusIcon from "../atoms/StatusIcon";
+import TextHighlighter from "../atoms/TextHighlighter";
+import {gapHalf, gapQuarter, STATUS_COLORS, textPrimaryClr, textSecondaryClr} from "../../theme/theme";
+import {ICON_COLORS, SLOT_HEIGHT, STR_CANCELLED, STR_NO_SHOW} from "../../constants/constantsPlus";
+import {px} from "../../utils/utilPlus";
 
 export default function BookingBlock(props)
 {
@@ -88,12 +88,24 @@ export default function BookingBlock(props)
       style={styles.block}
       {...listeners}
       {...attributes}
-      onClick={(e) => { e.stopPropagation(); onBookingClick?.(booking); }}
-      onDoubleClick={(e) => { e.stopPropagation(); onBookingDoubleClick?.(booking); }}
+      onClick={(e) =>
+      {
+        e.stopPropagation();
+        onBookingClick?.(booking);
+      }}
+      onDoubleClick={(e) =>
+      {
+        e.stopPropagation();
+        onBookingDoubleClick?.(booking);
+      }}
     >
       <TextHighlighter value={booking.service} searchWords={searchWords} style={styles.service} />
       <Box style={styles.detailGroup}>
-        <TextHighlighter value={booking.customerId ? String(booking.customerId) : ''} searchWords={searchWords} style={styles.phone} />
+        <TextHighlighter
+          value={booking.customerId ? String(booking.customerId) : ""}
+          searchWords={searchWords}
+          style={styles.phone}
+        />
         <TextHighlighter value={booking.customerName} searchWords={searchWords} style={styles.customerName} />
       </Box>
       <Box style={styles.spacer} />

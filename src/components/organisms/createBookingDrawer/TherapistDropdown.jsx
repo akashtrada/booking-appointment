@@ -1,117 +1,118 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-import {
-  Box,
-  Paper,
-  Typography,
-  TextField,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import BoxAps from '../../molecules/BoxAps/BoxAps';
-import useTherapistStore from '../../../store/therapistStore';
-import { px } from '../../../utils/appPlus';
-import { dividerClr, textSecondaryClr, textPrimaryClr } from '../../../theme/theme';
+import {useEffect, useMemo, useRef, useState} from "react";
+import {Box, IconButton, InputAdornment, Paper, TextField, Typography} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import BoxAps from "../../molecules/BoxAps";
+import useTherapistStore from "../../../store/therapistStore";
+import {px} from "../../../utils/utilPlus";
+import {dividerClr, textPrimaryClr, textSecondaryClr} from "../../../theme/theme";
 
 const ROW_HEIGHT = 48;
 const VISIBLE_ROWS = 10;
 const DROPDOWN_HEIGHT = ROW_HEIGHT * VISIBLE_ROWS;
 
-export default function TherapistDropdown({ value, onChange }) {
+export default function TherapistDropdown({value, onChange})
+{
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const containerRef = useRef(null);
 
   const therapists = useTherapistStore((s) => s.therapists);
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+  useEffect(() =>
+  {
+    function handleClickOutside(e)
+    {
+      if(containerRef.current && !containerRef.current.contains(e.target))
+      {
         setOpen(false);
-        setSearch('');
+        setSearch("");
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filtered = useMemo(() => {
+  const filtered = useMemo(() =>
+  {
     const q = search.toLowerCase().trim();
     const list = q
       ? therapists.filter(
-          (t) =>
-            (t.alias || '').toLowerCase().includes(q) ||
-            (t.code || '').toLowerCase().includes(q) ||
-            String(t.pagerNumber || '').includes(q)
-        )
-      : [...therapists].sort((a, b) => (a.alias || '').localeCompare(b.alias || ''));
+        (t) =>
+          (t.alias || "").toLowerCase().includes(q) ||
+          (t.code || "").toLowerCase().includes(q) ||
+          String(t.pagerNumber || "").includes(q)
+      )
+      : [...therapists].sort((a, b) => (a.alias || "").localeCompare(b.alias || ""));
     return list;
   }, [therapists, search]);
 
-  const handleSelect = (therapist) => {
+  const handleSelect = (therapist) =>
+  {
     onChange(therapist);
     setOpen(false);
-    setSearch('');
+    setSearch("");
   };
 
-  const handleClear = () => {
+  const handleClear = () =>
+  {
     onChange(null);
   };
 
   const styles = useMemo(() => ({
-    container: { position: 'relative', flex: 1 },
+    container: {position: "relative", flex: 1},
     trigger: {
-      cursor: 'pointer',
+      cursor: "pointer",
       border: `1px solid ${dividerClr}`,
       borderRadius: px(6),
       padding: `${px(5)} ${px(8)}`,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      minHeight: px(36),
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      minHeight: px(36)
     },
-    triggerText: { fontSize: '13px', color: textSecondaryClr },
+    triggerText: {fontSize: "13px", color: textSecondaryClr},
     dropdown: {
-      position: 'absolute',
-      top: 'calc(100% + 4px)',
+      position: "absolute",
+      top: "calc(100% + 4px)",
       left: 0,
       right: 0,
       zIndex: 1400,
       border: `1px solid ${dividerClr}`,
-      borderRadius: px(6),
+      borderRadius: px(6)
     },
     searchBox: {
       padding: px(8),
-      borderBottom: `1px solid ${dividerClr}`,
+      borderBottom: `1px solid ${dividerClr}`
     },
     listArea: {
       height: px(DROPDOWN_HEIGHT),
-      overflowY: 'auto',
+      overflowY: "auto"
     },
     row: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
       padding: `${px(8)} ${px(12)}`,
-      cursor: 'pointer',
+      cursor: "pointer",
       borderBottom: `1px solid #f5f5f5`,
       minHeight: px(ROW_HEIGHT),
-      boxSizing: 'border-box',
+      boxSizing: "border-box"
     },
-    rowName: { fontSize: '13px', color: textPrimaryClr, fontWeight: 500 },
-    rowCode: { fontSize: '11px', color: textSecondaryClr },
+    rowName: {fontSize: "13px", color: textPrimaryClr, fontWeight: 500},
+    rowCode: {fontSize: "11px", color: textSecondaryClr},
     emptyMsg: {
       padding: `${px(16)} ${px(12)}`,
-      fontSize: '13px',
+      fontSize: "13px",
       color: textSecondaryClr,
-      textAlign: 'center',
+      textAlign: "center"
     },
     selectedRow: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: px(6),
-    },
+      display: "flex",
+      alignItems: "center",
+      gap: px(6)
+    }
   }), []);
 
   return (
@@ -127,14 +128,14 @@ export default function TherapistDropdown({ value, onChange }) {
               secondaryText={value.code}
             />
           </Box>
-          <IconButton size="small" onClick={handleClear} sx={{ p: 0 }}>
+          <IconButton size="small" onClick={handleClear} sx={{p: 0}}>
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
         </Box>
       ) : (
         <Box style={styles.trigger} onClick={() => setOpen((o) => !o)}>
           <Typography style={styles.triggerText}>Select therapist</Typography>
-          <SearchIcon fontSize="small" sx={{ color: textSecondaryClr }} />
+          <SearchIcon fontSize="small" sx={{color: textSecondaryClr}} />
         </Box>
       )}
 
@@ -151,9 +152,9 @@ export default function TherapistDropdown({ value, onChange }) {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon fontSize="small" sx={{ color: textSecondaryClr }} />
+                    <SearchIcon fontSize="small" sx={{color: textSecondaryClr}} />
                   </InputAdornment>
-                ),
+                )
               }}
             />
           </Box>

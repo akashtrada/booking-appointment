@@ -29,29 +29,21 @@ import {Controller, useFieldArray, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import dayjs from "dayjs";
-import CustomerSearch from "./CustomerSearch";
-import BookingItemForm from "./BookingItemForm";
+import CustomerSearch from "../organisms/createBookingDrawer/CustomerSearch";
+import BookingItemForm from "../organisms/createBookingDrawer/BookingItemForm";
 import {
   cancelBooking,
   createBooking,
   deleteBooking,
   updateBooking,
   updateBookingStatus
-} from "../../../services/bookingCreateService";
-import useUiStore from "../../../store/uiStore";
-import useFilterStore from "../../../store/filterStore";
-import useBookingStore from "../../../store/bookingStore";
-import useTherapistStore from "../../../store/therapistStore";
-import {px} from "../../../utils/appPlus";
-import {
-  bgWhiteClr,
-  dividerClr,
-  gapHalf,
-  gapStd,
-  HEADER_BG,
-  textPrimaryClr,
-  textSecondaryClr
-} from "../../../theme/theme";
+} from "../../services/bookingCreateService";
+import useUiStore from "../../store/uiStore";
+import useFilterStore from "../../store/filterStore";
+import useBookingStore from "../../store/bookingStore";
+import useTherapistStore from "../../store/therapistStore";
+import {px} from "../../utils/utilPlus";
+import {bgWhiteClr, dividerClr, gapHalf, gapStd, HEADER_BG, textPrimaryClr, textSecondaryClr} from "../../theme/theme";
 import {
   OUTLET_NAME,
   PANEL,
@@ -59,7 +51,7 @@ import {
   SOURCE_OPTIONS,
   STR_CHECKIN,
   STR_CONFIRMED
-} from "../../../constants/constantsPlus";
+} from "../../constants/constantsPlus";
 
 const DRAWER_WIDTH = 420;
 
@@ -358,13 +350,13 @@ export default function CreateBookingDrawer()
       fontSize: "12px",
       fontWeight: 600
     },
-    detailsGrid: { display: 'flex', flexDirection: 'column', gap: px(6) },
-    detailRow: { display: 'flex', alignItems: 'flex-start', gap: px(6) },
-    detailLabel: { fontSize: '13px', color: textSecondaryClr, minWidth: px(88), flexShrink: 0 },
-    detailValue: { fontSize: '13px', color: textPrimaryClr, fontWeight: 500 },
+    detailsGrid: {display: "flex", flexDirection: "column", gap: px(6)},
+    detailRow: {display: "flex", alignItems: "flex-start", gap: px(6)},
+    detailLabel: {fontSize: "13px", color: textSecondaryClr, minWidth: px(88), flexShrink: 0},
+    detailValue: {fontSize: "13px", color: textPrimaryClr, fontWeight: 500}
   }), []);
 
-  const isCancelled = isEdit && rawBooking?.status === 'Cancelled';
+  const isCancelled = isEdit && rawBooking?.status === "Cancelled";
 
   const renderHeader = () =>
   {
@@ -429,7 +421,7 @@ export default function CreateBookingDrawer()
 
   const renderEditBody = (viewOnly = false) => (
     <Box
-      style={{ pointerEvents: viewOnly ? 'none' : 'auto' }}
+      style={{pointerEvents: viewOnly ? "none" : "auto"}}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -568,8 +560,8 @@ export default function CreateBookingDrawer()
               minRows={2}
               maxRows={5}
               sx={field.value ? {
-                '& .MuiInputBase-root': { backgroundColor: '#F6E9B4' },
-                '& .MuiOutlinedInput-notchedOutline': { borderColor: '#e0c96e' },
+                "& .MuiInputBase-root": {backgroundColor: "#f6e9b4"},
+                "& .MuiOutlinedInput-notchedOutline": {borderColor: "#e0c96e"}
               } : {}}
             />
           )}
@@ -582,12 +574,18 @@ export default function CreateBookingDrawer()
             <Typography style={styles.sectionLabel}>Booking details</Typography>
             <Box style={styles.detailsGrid}>
               {[
-                { label: 'Booked on', value: rawBooking.created_at ? dayjs(rawBooking.created_at).format('ddd, MMM D [at] h:mm A') : '—' },
-                { label: 'Booked by', value: rawBooking.customer_name || '—' },
-                { label: 'Updated on', value: rawBooking.updated_at ? dayjs(rawBooking.updated_at).format('ddd, MMM D [at] h:mm A') : '—' },
-                { label: 'Updated by', value: rawBooking.updated_by_name || rawBooking.updated_by || '—' },
-                { label: 'Source', value: rawBooking.source || '—' },
-              ].map(({ label, value }) => (
+                {
+                  label: "Booked on",
+                  value: rawBooking.created_at ? dayjs(rawBooking.created_at).format("ddd, MMM D [at] h:mm A") : "—"
+                },
+                {label: "Booked by", value: rawBooking.customer_name || "—"},
+                {
+                  label: "Updated on",
+                  value: rawBooking.updated_at ? dayjs(rawBooking.updated_at).format("ddd, MMM D [at] h:mm A") : "—"
+                },
+                {label: "Updated by", value: rawBooking.updated_by_name || rawBooking.updated_by || "—"},
+                {label: "Source", value: rawBooking.source || "—"}
+              ].map(({label, value}) => (
                 <Box key={label} style={styles.detailRow}>
                   <Typography style={styles.detailLabel}>{label}:</Typography>
                   <Typography style={styles.detailValue}>{value}</Typography>
@@ -608,12 +606,13 @@ export default function CreateBookingDrawer()
           {isEdit && !isEditing && isCancelled && (
             <Box style={styles.statusBar}>
               <Box style={styles.statusLeft}>
-                <Box style={{ ...styles.statusDot, backgroundColor: '#9e9e9e' }} />
+                <Box style={{...styles.statusDot, backgroundColor: "#9e9e9e"}} />
                 <Typography style={styles.statusText}>Cancelled (normal cancellation)</Typography>
               </Box>
             </Box>
           )}
-          {isEdit && !isEditing && !isCancelled && (rawBooking?.status === STR_CONFIRMED || rawBooking?.status === 'Check-in (In Progress)') && (
+          {isEdit && !isEditing && !isCancelled && (rawBooking?.status === STR_CONFIRMED || rawBooking?.status
+            === "Check-in (In Progress)") && (
             <Box style={styles.statusBar}>
               <Box style={styles.statusLeft}>
                 <Box
@@ -647,7 +646,7 @@ export default function CreateBookingDrawer()
               </Button>
             </Box>
           )}
-          <Box style={{ flex: 1, overflowY: 'auto' }}>
+          <Box style={{flex: 1, overflowY: "auto"}}>
             {renderEditBody(isEdit && !isEditing)}
           </Box>
           {(!isEdit || isEditing) && !isCancelled && (
