@@ -57,4 +57,9 @@ export const DRAWER_WIDTH = 420;
 
 export const DEFAULT_START_TIME = "09:00";
 
+export const API_BASE_URL = "https://dev.natureland.hipster-virtual.com";
+export const LOGIN_EMAIL = "react@hipster-inc.com";
+export const LOGIN_PASSWORD = "React@123";
+export const LOGIN_KEY_PASS = "07ba959153fe7eec778361bf42079439";
+
 
