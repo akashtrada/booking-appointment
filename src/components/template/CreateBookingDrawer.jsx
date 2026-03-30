@@ -42,9 +42,11 @@ import useUiStore from "../../store/uiStore";
 import useFilterStore from "../../store/filterStore";
 import useBookingStore from "../../store/bookingStore";
 import useTherapistStore from "../../store/therapistStore";
-import {px} from "../../utils/utilPlus";
+import {px, TIME_SLOTS} from "../../utils/utilPlus";
 import {bgWhiteClr, dividerClr, gapHalf, gapStd, HEADER_BG, textPrimaryClr, textSecondaryClr} from "../../theme/theme";
 import {
+  DEFAULT_START_TIME,
+  DRAWER_WIDTH,
   OUTLET_NAME,
   PANEL,
   PENDING_BOOKING_COLOR,
@@ -52,8 +54,6 @@ import {
   STR_CHECKIN,
   STR_CONFIRMED
 } from "../../constants/constantsPlus";
-
-const DRAWER_WIDTH = 420;
 
 const schema = yup.object({
   start_time: yup.string().required("Select a time"),
@@ -76,31 +76,11 @@ const schema = yup.object({
   note: yup.string()
 });
 
-const TIME_SLOTS = (() =>
-{
-  const slots = [];
-  for(let h = 9; h < 21; h++)
-  {
-    for(let m = 0; m < 60; m += 15)
-    {
-      const period = h < 12 ? "AM" : "PM";
-      const dh = h % 12 || 12;
-      slots.push({
-        value: `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`,
-        label: `${String(dh).padStart(2, "0")}:${String(m).padStart(2, "0")} ${period}`
-      });
-    }
-  }
-  return slots;
-})();
-
-const DEFAULT_START = "09:00";
-
 const DEFAULT_ITEM = {
   service: null,
   therapist: null,
-  start_time: DEFAULT_START,
-  end_time: DEFAULT_START,
+  start_time: DEFAULT_START_TIME,
+  end_time: DEFAULT_START_TIME,
   duration: 0,
   service_request: "",
   room: null
@@ -163,7 +143,7 @@ export default function CreateBookingDrawer()
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      start_time: DEFAULT_START,
+      start_time: DEFAULT_START_TIME,
       customer: null,
       items: [{...DEFAULT_ITEM}],
       source: "",
@@ -179,7 +159,7 @@ export default function CreateBookingDrawer()
     const items = Object.values(booking.booking_item || {}).flat();
     const firstItem = items[0];
     return {
-      start_time: firstItem?.start_time?.substring(0, 5) || DEFAULT_START,
+      start_time: firstItem?.start_time?.substring(0, 5) || DEFAULT_START_TIME,
       customer: {
         id: booking.user_id,
         name: booking.customer_name,
@@ -191,8 +171,8 @@ export default function CreateBookingDrawer()
           ? {id: item.service_id, name: item.service, duration: item.duration, price: 0}
           : null,
         therapist: therapists.find((t) => t.id === item.therapist_id) || null,
-        start_time: item.start_time?.substring(0, 5) || DEFAULT_START,
-        end_time: item.end_time?.substring(0, 5) || DEFAULT_START,
+        start_time: item.start_time?.substring(0, 5) || DEFAULT_START_TIME,
+        end_time: item.end_time?.substring(0, 5) || DEFAULT_START_TIME,
         duration: item.duration || 0,
         service_request: item.service_request || "",
         room: item.room_items?.[0]
@@ -218,7 +198,7 @@ export default function CreateBookingDrawer()
     }
     else
     {
-      reset({start_time: DEFAULT_START, customer: null, items: [{...DEFAULT_ITEM}], source: "", note: ""});
+      reset({start_time: DEFAULT_START_TIME, customer: null, items: [{...DEFAULT_ITEM}], source: "", note: ""});
       setFormDate(selectedDate);
       setIsEditing(false);
     }
@@ -240,7 +220,7 @@ export default function CreateBookingDrawer()
 
   const handleClose = () =>
   {
-    reset({start_time: DEFAULT_START, customer: null, items: [{...DEFAULT_ITEM}], source: "", note: ""});
+    reset({start_time: DEFAULT_START_TIME, customer: null, items: [{...DEFAULT_ITEM}], source: "", note: ""});
     setIsEditing(false);
     if(isEdit)
     {

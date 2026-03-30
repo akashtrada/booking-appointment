@@ -20,17 +20,7 @@ import useTherapistStore from "../../store/therapistStore";
 import useRoomStore from "../../store/roomStore";
 import {px} from "../../utils/utilPlus";
 import {HEADER_BG, textPrimaryClr, textSecondaryClr} from "../../theme/theme";
-
-const BOOKING_STATUSES = [
-  "Confirmed",
-  "Unconfirmed",
-  "Checked In",
-  "Completed",
-  "Cancelled",
-  "No Show",
-  "Holding",
-  "Check-in (In Progress)"
-];
+import {BOOKING_STATUSES} from "../../constants/constantsPlus";
 
 export default function FilterModel({anchorEl, onClose})
 {

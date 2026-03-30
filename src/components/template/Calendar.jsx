@@ -7,11 +7,7 @@ import CalendarHeader from "../organisms/calendar/CalendarHeader";
 import CalendarRow from "../organisms/calendar/CalendarRow";
 import BookingBlock from "../molecules/BookingBlock";
 import {px} from "../../utils/utilPlus";
-
-const CORNER_WIDTH = 80;
-const COL_WIDTH = 120;
-const ROW_HEIGHT = 26;
-const SLOT_MINUTES = 15;
+import {COL_WIDTH, CORNER_WIDTH, SLOT_HEIGHT, SLOT_MINUTES} from "../../constants/constantsPlus";
 
 function generateTimeSlots(startHour, endHour)
 {
@@ -64,7 +60,7 @@ export default function Calendar(props)
   const rowVirtualizer = useVirtualizer({
     count: timeSlots.length,
     getScrollElement: () => scrollEl,
-    estimateSize: () => ROW_HEIGHT,
+    estimateSize: () => SLOT_HEIGHT,
     overscan: 5
   });
 

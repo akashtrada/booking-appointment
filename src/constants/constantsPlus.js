@@ -9,6 +9,16 @@ export const STR_NO_SHOW = "No-show";
 export const STR_LOGO = "Logo";
 
 export const SLOT_HEIGHT = 26;
+export const SLOT_MINUTES = 15;
+export const TIME_COL_WIDTH = 80;
+export const COL_WIDTH = 120;
+export const HEADER_HEIGHT = 48;
+export const CORNER_WIDTH = 80;
+
+export const GENDER_COLOR = {
+  male: "#3b82f6",
+  female: "#ec4899"
+};
 
 export const ICON_COLORS = {
   c: "#367c41",
@@ -31,3 +41,20 @@ export const PAYMENT_TYPE = "payatstore";
 export const PENDING_BOOKING_COLOR = "#bc6b38";
 
 export const SOURCE_OPTIONS = ["Walk-in", "WhatsApp", "By Phone", "App", "Online", "Instagram"];
+
+export const BOOKING_STATUSES = [
+  "Confirmed",
+  "Unconfirmed",
+  "Checked In",
+  "Completed",
+  "Cancelled",
+  "No Show",
+  "Holding",
+  "Check-in (In Progress)"
+];
+
+export const DRAWER_WIDTH = 420;
+
+export const DEFAULT_START_TIME = "09:00";
+
+

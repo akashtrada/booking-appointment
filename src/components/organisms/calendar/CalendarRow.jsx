@@ -2,11 +2,7 @@ import {useMemo} from "react";
 import {Box, Typography} from "@mui/material";
 import CalendarCell from "./CalendarCell";
 import {px} from "../../../utils/utilPlus";
-
-const TIME_COL_WIDTH = 80;
-const COL_WIDTH = 120;
-const ROW_HEIGHT = 26;
-const SLOT_MINUTES = 15;
+import {COL_WIDTH, SLOT_HEIGHT, SLOT_MINUTES, TIME_COL_WIDTH} from "../../../constants/constantsPlus";
 
 function formatTimeLabel(hour, minute)
 {
@@ -44,7 +40,7 @@ export default function CalendarRow(props)
       top: px(virtualRow.start),
       left: 0,
       width: "100%",
-      height: px(ROW_HEIGHT),
+      height: px(SLOT_HEIGHT),
       display: "flex",
       borderBottom: timeSlot.isHourMark ? "1px solid #e0e0e0" : "1px solid #f5f5f5"
     },
@@ -53,7 +49,7 @@ export default function CalendarRow(props)
       left: 0,
       width: px(TIME_COL_WIDTH),
       minWidth: px(TIME_COL_WIDTH),
-      height: px(ROW_HEIGHT),
+      height: px(SLOT_HEIGHT),
       zIndex: 20,
       backgroundColor: "#ffffff",
       borderRight: "1px solid #e0e0e0",
@@ -74,12 +70,12 @@ export default function CalendarRow(props)
     cellsArea: {
       position: "relative",
       flex: 1,
-      height: px(ROW_HEIGHT)
+      height: px(SLOT_HEIGHT)
     },
     cell: {
       position: "absolute",
       top: 0,
-      height: px(ROW_HEIGHT),
+      height: px(SLOT_HEIGHT),
       width: px(COL_WIDTH)
     }
   }), [virtualRow.start, timeSlot.isHourMark]);

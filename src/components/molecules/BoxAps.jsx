@@ -1,11 +1,7 @@
 import {useMemo} from "react";
 import {Avatar, Box, Skeleton, Typography} from "@mui/material";
 import {px} from "../../utils/utilPlus";
-
-const GENDER_COLOR = {
-  male: "#3b82f6",
-  female: "#ec4899"
-};
+import {GENDER_COLOR} from "../../constants/constantsPlus";
 
 export default function BoxAps(props)
 {

@@ -3,10 +3,8 @@ import {Box, Typography} from "@mui/material";
 import BoxAps from "../../molecules/BoxAps";
 import EmptyState from "../../atoms/EmptyState";
 import {px} from "../../../utils/utilPlus";
+import {COL_WIDTH, CORNER_WIDTH, HEADER_HEIGHT} from "../../../constants/constantsPlus";
 
-const CORNER_WIDTH = 80;
-const COL_WIDTH = 120;
-const HEADER_HEIGHT = 48;
 const SKELETON_COUNT = 8;
 
 export default function CalendarHeader(props)

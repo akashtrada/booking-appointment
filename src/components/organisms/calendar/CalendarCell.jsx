@@ -3,9 +3,7 @@ import {Box} from "@mui/material";
 import {useDroppable} from "@dnd-kit/core";
 import BookingBlock from "../../molecules/BookingBlock";
 import {px} from "../../../utils/utilPlus";
-
-const COL_WIDTH = 120;
-const ROW_HEIGHT = 26;
+import {COL_WIDTH, SLOT_HEIGHT} from "../../../constants/constantsPlus";
 
 export default function CalendarCell(props)
 {
@@ -29,7 +27,7 @@ export default function CalendarCell(props)
     cell: {
       width: px(COL_WIDTH),
       minWidth: px(COL_WIDTH),
-      height: px(ROW_HEIGHT),
+      height: px(SLOT_HEIGHT),
       position: "relative",
       borderRight: "1px solid #f0f0f0",
       backgroundColor: isOver ? "#e3f2fd" : "transparent",
